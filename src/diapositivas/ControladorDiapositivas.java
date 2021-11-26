@@ -12,6 +12,7 @@ public class ControladorDiapositivas extends javax.swing.JFrame {
     private boolean presentando = false;
     private int diapositiva = 1;
     private MainFrame pantalla = new MainFrame(new Balon(null),0,0);
+    javax.swing.JFrame inicio = null;
     
     public ControladorDiapositivas() {
         initComponents();
@@ -170,7 +171,7 @@ public class ControladorDiapositivas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarMouseClicked
 
     private void btnSSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSSiguienteMouseClicked
-        if(diapositiva == 5) {
+        if(diapositiva == 6) {
             showMessageDialog(pantalla, "Ésta es la última diapositiva", "Error", 0);
         } else {
             diapositiva += 1;
@@ -188,25 +189,32 @@ public class ControladorDiapositivas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAnteriorMouseClicked
 
     private void controlarDiapositivas(int valor) {
+        if(inicio != null)
+            inicio.setVisible(false);
         pantalla.setVisible(false);
         
         if(valor == 1) {
+            inicio = new Inicio();
+            inicio.setVisible(true);
+            inicio.setLocation(10, 10);
+        }else if(valor == 2) {
+            inicio.setVisible(false);
             pantalla = new MainFrame(new Balon(null),820,461);
             pantalla.setTitle("Producto: Balón Baloncesto");
             pantalla.setLocation(10, 10);
-        } else if(valor == 2) {
+        } else if(valor == 3) {
             pantalla = new MainFrame(new Portatil(null),820,461);
             pantalla.setTitle("Producto: Computador Portatil");
             pantalla.setLocation(10, 10);
-        } else if(valor == 3) {
+        } else if(valor == 4) {
             pantalla = new MainFrame(new Camara(null),820,461);
             pantalla.setTitle("Producto: Cámara Fotográfica");
             pantalla.setLocation(10, 10);
-        } else if(valor == 4) {
+        } else if(valor == 5) {
             pantalla = new MainFrame(new Dispensador(null),820,461);
             pantalla.setTitle("Producto: Dispensador De Agua");
             pantalla.setLocation(10, 10);
-        } else if(valor == 5) {
+        } else if(valor == 6) {
             pantalla = new MainFrame(new Banana(null),820,461);
             pantalla.setTitle("Producto: Banana Madura");
             pantalla.setLocation(10, 10);
@@ -222,10 +230,6 @@ public class ControladorDiapositivas extends javax.swing.JFrame {
     private void cambiarEstiloBotonIniciar() {
         btnIniciar.setText("INICIAR PRESENTACIÓN");
         bgIniciar.setBackground(new java.awt.Color(0, 153, 51));
-    }
-    
-    public static void main(String args[]) {
-        new ControladorDiapositivas().setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

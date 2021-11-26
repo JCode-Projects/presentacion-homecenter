@@ -7,7 +7,6 @@ import com.sun.j3d.loaders.objectfile.ObjectFile;
 import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.GraphicsConfiguration;
-import com.sun.j3d.utils.applet.MainFrame;
 import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.io.*;
@@ -22,13 +21,13 @@ public class Portatil extends Applet {
     private static final long serialVersionUID = 1L;
     
     public Portatil(String filename){
-        //se crea el universo
+        // Se crea un nuevo universo
         setLayout(new BorderLayout());
         GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
         Canvas3D c = new Canvas3D(config);
         add("Center",c);
         
-        //se crea el metodo de la escena y se une al universo
+        // Se inicializa la escena
         BranchGroup escena = crearescenaG(filename);
         SimpleUniverse u = new SimpleUniverse(c);
         u.getViewingPlatform().setNominalViewingTransform();
@@ -43,7 +42,7 @@ public class Portatil extends Applet {
         escenaRoot.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         escenaRoot.addChild(dibujarfondo());
         
-        //ambiente de luces
+        // Se definen las luces del ambiente
         Color3f luz1Color = new Color3f(1.0f,1.0f,0.9f);
         Vector3f luz1Direccion = new Vector3f(4.0f,-7.0f,-12.0f);
         Color3f luz2Color = new Color3f(0.3f,0.3f,0.4f);
@@ -54,7 +53,7 @@ public class Portatil extends Applet {
         Nodoambienteluces.setInfluencingBounds(limites);
         escenaRoot.addChild(Nodoambienteluces);
         
-        //direccion de las luces
+        // Configurar la dirección de las luces
         DirectionalLight luz1 = new DirectionalLight(luz1Color,luz1Direccion);
         luz1.setInfluencingBounds(limites);
         escenaRoot.addChild(luz1);
@@ -74,7 +73,7 @@ public class Portatil extends Applet {
         rotar.setSchedulingBounds(limites);
         escenaTG.addChild(rotar);
         
-        //cargar objeto
+        // Cargar el elemento .OBJ
         TransformGroup objTG = new TransformGroup();
         Transform3D objTrans = new Transform3D();
         objTG.getTransform(objTrans);

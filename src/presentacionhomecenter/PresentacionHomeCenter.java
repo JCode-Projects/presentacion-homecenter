@@ -1,5 +1,5 @@
 package presentacionhomecenter;
-
+import diapositivas.ControladorDiapositivas;
 /**
  *
  * @author JCode
@@ -7,8 +7,6 @@ package presentacionhomecenter;
 public class PresentacionHomeCenter {
 
     public static void main(String[] args) {
-        // TODO code application logic here
-        
+        new ControladorDiapositivas().setVisible(true);
     }
-    
 }

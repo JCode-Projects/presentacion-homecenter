@@ -7,7 +7,6 @@ import com.sun.j3d.loaders.objectfile.ObjectFile;
 import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.GraphicsConfiguration;
-import com.sun.j3d.utils.applet.MainFrame;
 import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.io.*;
@@ -22,13 +21,13 @@ public class Dispensador extends Applet {
     private static final long serialVersionUID = 1L;
     
     public Dispensador(String filename){
-        //se crea el universo
+        // Se crea un nuevo universo
         setLayout(new BorderLayout());
         GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
         Canvas3D c = new Canvas3D(config);
         add("Center",c);
         
-        //se crea el metodo de la escena y se une al universo
+        // Se inicializa la escena
         BranchGroup escena = crearescenaG(filename);
         SimpleUniverse u = new SimpleUniverse(c);
         u.getViewingPlatform().setNominalViewingTransform();
@@ -43,7 +42,7 @@ public class Dispensador extends Applet {
         escenaRoot.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         escenaRoot.addChild(dibujarfondo());
         
-        //ambiente de luces
+        // Se definen las luces del ambiente
         Color3f luz1Color = new Color3f(1.0f,1.0f,0.9f);
         Vector3f luz1Direccion = new Vector3f(4.0f,-7.0f,-12.0f);
         Color3f luz2Color = new Color3f(0.3f,0.3f,0.4f);
@@ -54,7 +53,7 @@ public class Dispensador extends Applet {
         Nodoambienteluces.setInfluencingBounds(limites);
         escenaRoot.addChild(Nodoambienteluces);
         
-        //direccion de las luces
+        // Configurar la dirección de las luces
         DirectionalLight luz1 = new DirectionalLight(luz1Color,luz1Direccion);
         luz1.setInfluencingBounds(limites);
         escenaRoot.addChild(luz1);
@@ -67,18 +66,18 @@ public class Dispensador extends Applet {
         escenaTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         escenaRoot.addChild(escenaTG);
         
-        Alpha rotacionAlpha = new Alpha(-1,Alpha.INCREASING_ENABLE,0,0,4000,0,0,0,0,0);
+        Alpha rotacionAlpha = new Alpha(-1, Alpha.INCREASING_ENABLE | Alpha.DECREASING_ENABLE, 0, 0, 3500, 6000, 26, 1500, 2000, 26);
         
         Transform3D yAxis = new Transform3D();
-        RotationInterpolator rotar = new RotationInterpolator(rotacionAlpha,escenaTG,yAxis,0.0f,(float) Math.PI*2.0f);
+        RotationInterpolator rotar = new RotationInterpolator(rotacionAlpha,escenaTG,yAxis,0.5f,5.5f);
         rotar.setSchedulingBounds(limites);
         escenaTG.addChild(rotar);
         
-        //cargar objeto
+        // Cargar el elemento .OBJ
         TransformGroup objTG = new TransformGroup();
         Transform3D objTrans = new Transform3D();
         objTG.getTransform(objTrans);
-        objTrans.setTranslation(new Vector3d(0.0,0.2,0.0));
+        objTrans.setTranslation(new Vector3d(0.1,0.2,0.2));
         objTrans.setScale(0.26);
         objTG.setTransform(objTrans);
         
@@ -91,7 +90,6 @@ public class Dispensador extends Applet {
         
         try{
            s = file.load(filename == null ? "images\\Dispensador\\083.obj" : filename);
-           //objTG.addChild(s.getSceneGroup());
         }
         catch (FileNotFoundException | ParsingErrorException | IncorrectFormatException e){
             System.err.println(e);
